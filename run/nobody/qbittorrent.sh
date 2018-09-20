@@ -21,10 +21,10 @@ if [[ "${VPN_ENABLED}" == "no" ]]; then
 
 	qbittorrent_ip="0.0.0.0"
 
-	# set listen interface ip address for deluge using python script
+	# set listen interface ip address for qBittorrent using python script
 	/home/nobody/qbittorrent-set-ip.sh "${qbittorrent_ip}"
 
-	# run deluge daemon (daemonized, non-blocking)
+	# run qBittorrent daemon (daemonized, non-blocking)
 	echo "[info] Attempting to start qBittorrent..."
 	/usr/bin/qbittorrent-nox -d --profile=/config
 
@@ -56,7 +56,7 @@ else
 
 				echo "[info] qBittorrent not running"
 
-				# mark as deluge not running
+				# mark as qBittorrent not running
 				qbittorrent_running="false"
 
 			else
@@ -66,7 +66,7 @@ else
 
 			fi
 
-			# if current bind interface ip is different to tunnel local ip then re-configure deluge
+			# if current bind interface ip is different to tunnel local ip then re-configure qBittorrent
 			if [[ "${qbittorrent_ip}" != "${vpn_ip}" ]]; then
 
 				echo "[info] qBittorrent listening interface IP $qbittorrent_ip and VPN provider IP ${vpn_ip} different, marking for reconfigure"
@@ -84,7 +84,7 @@ else
 				# if vpn port is not an integer then dont change port
 				if [[ ! "${VPN_INCOMING_PORT}" =~ ^-?[0-9]+$ ]]; then
 
-					# set vpn port to current deluge port, as we currently cannot detect incoming port (line saturated, or issues with pia)
+					# set vpn port to current qBittorrent port, as we currently cannot detect incoming port (line saturated, or issues with pia)
 					VPN_INCOMING_PORT="${qbittorrent_port}"
 
 					# ignore port change as we cannot detect new port
@@ -123,7 +123,7 @@ else
 
 				if [[ "${VPN_PROV}" == "pia" ]]; then
 
-					# reconfigure deluge with new port
+					# reconfigure qBittorrent with new port
 					if [[ "${port_change}" == "true" ]]; then
 
 						echo "[info] Reconfiguring qBittorrent due to port change..."
@@ -131,13 +131,13 @@ else
 						# set incoming port
 						/home/nobody/qbittorrent-set-incoming-port.sh "${INCOMING_PORT}"
 
-						echo "[info] Deluge reconfigured for port change"
+						echo "[info] qBittorrent reconfigured for port change"
 
 					fi
 
 				fi
 
-				# reconfigure deluge with new ip
+				# reconfigure qBittorrent with new ip
 				if [[ "${ip_change}" == "true" ]]; then
 
 					echo "[info] Reconfiguring qBittorrent due to ip change..."
@@ -156,15 +156,15 @@ else
 				# if pid file exists then remove (generated from previous run)
 				rm -f /config/qbittorrent-nox.pid
 
-				# set listen interface ip address for deluge using python script
+				# set listen interface ip address for qBittorrent using python script
 				/home/nobody/qbittorrent-set-ip.sh ${vpn_ip}
 
-				# run deluge daemon (daemonized, non-blocking)
+				# run qBittorrent daemon (daemonized, non-blocking)
 				/usr/bin/qbittorrent-nox -d --profile=/config
 
 				if [[ "${VPN_PROV}" == "pia" || -n "${VPN_INCOMING_PORT}" ]]; then
 
-					# wait for deluge process to start (listen for port)
+					# wait for qBittorrent process to start (listen for port)
 					while [[ $(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".${INCOMING_PORT}"') == "" ]]; do
 						sleep 0.1
 					done

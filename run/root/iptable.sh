@@ -42,7 +42,7 @@ if [[ $iptable_mangle_exit_code == 0 ]]; then
 
 	echo "[info] iptable_mangle support detected, adding fwmark for tables"
 
-	# setup route for deluge webui using set-mark to route traffic for port ${WEBUI_PORT} to eth0
+	# setup route for qBittorrent webui using set-mark to route traffic for port ${WEBUI_PORT} to eth0
 	echo "${WEBUI_PORT}    webui" >> /etc/iproute2/rt_tables
 	ip rule add fwmark 1 table webui
 	ip route add default via $DEFAULT_GATEWAY table webui
@@ -99,7 +99,7 @@ for lan_network_item in "${lan_network_list[@]}"; do
 	# strip whitespace from start and end of lan_network_item
 	lan_network_item=$(echo "${lan_network_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
 
-	# accept input to deluge daemon port - used for lan access
+	# accept input to qBittorrent daemon port - used for lan access
 	iptables -A INPUT -i eth0 -s "${lan_network_item}" -p tcp --dport ${INCOMING_PORT} -j ACCEPT
 
 	# accept input to privoxy if enabled
@@ -136,13 +136,13 @@ iptables -A OUTPUT -o eth0 -p ${VPN_PROTOCOL} --dport ${VPN_PORT} -j ACCEPT
 # if iptable mangle is available (kernel module) then use mark
 if [[ $iptable_mangle_exit_code == 0 ]]; then
 
-	# accept output from deluge webui port ${WEBUI_PORT} - used for external access
+	# accept output from qBittorrent webui port ${WEBUI_PORT} - used for external access
 	iptables -t mangle -A OUTPUT -p tcp --dport ${WEBUI_PORT} -j MARK --set-mark 1
 	iptables -t mangle -A OUTPUT -p tcp --sport ${WEBUI_PORT} -j MARK --set-mark 1
 
 fi
 
-# accept output from deluge webui port ${WEBUI_PORT} - used for lan access
+# accept output from qBittorrent webui port ${WEBUI_PORT} - used for lan access
 iptables -A OUTPUT -o eth0 -p tcp --dport ${WEBUI_PORT} -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport ${WEBUI_PORT} -j ACCEPT
 
@@ -152,7 +152,7 @@ for lan_network_item in "${lan_network_list[@]}"; do
 	# strip whitespace from start and end of lan_network_item
 	lan_network_item=$(echo "${lan_network_item}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
 
-	# accept output to deluge daemon port - used for lan access
+	# accept output to qBittorrent daemon port - used for lan access
 	iptables -A OUTPUT -o eth0 -d "${lan_network_item}" -p tcp --sport ${INCOMING_PORT} -j ACCEPT
 
 	# accept output from privoxy if enabled - used for lan access
