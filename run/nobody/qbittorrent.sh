@@ -165,7 +165,7 @@ else
 				if [[ "${VPN_PROV}" == "pia" || -n "${VPN_INCOMING_PORT}" ]]; then
 
 					# wait for deluge process to start (listen for port)
-					while [[ $(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".58846"') == "" ]]; do
+					while [[ $(netstat -lnt | awk '$6 == "LISTEN" && $4 ~ ".${INCOMING_PORT}"') == "" ]]; do
 						sleep 0.1
 					done
 
@@ -177,7 +177,7 @@ else
 
 			fi
 
-			# set deluge ip and port to current vpn ip and port (used when checking for changes on next run)
+			# set qBittorrent ip and port to current vpn ip and port (used when checking for changes on next run)
 			qbittorrent_ip="${vpn_ip}"
 			qbittorrent_port="${VPN_INCOMING_PORT}"
 
