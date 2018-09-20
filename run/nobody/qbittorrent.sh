@@ -22,7 +22,7 @@ if [[ "${VPN_ENABLED}" == "no" ]]; then
 	qbittorrent_ip="0.0.0.0"
 
 	# set listen interface ip address for deluge using python script
-	/home/nobody/config_qbittorrent.sh "${qbittorrent_ip}"
+	/home/nobody/qbittorrent-set-ip.sh "${qbittorrent_ip}"
 
 	# run deluge daemon (daemonized, non-blocking)
 	echo "[info] Attempting to start qBittorrent..."
@@ -129,8 +129,7 @@ else
 						echo "[info] Reconfiguring qBittorrent due to port change..."
 
 						# set incoming port
-						#/usr/bin/deluge-console -c /config "config --set listen_ports (${VPN_INCOMING_PORT},${VPN_INCOMING_PORT})"
-						/home/nobody/qbittorrent-set-webui-port.sh "${INCOMING_PORT}"
+						/home/nobody/qbittorrent-set-incoming-port.sh "${INCOMING_PORT}"
 
 						echo "[info] Deluge reconfigured for port change"
 
@@ -144,7 +143,7 @@ else
 					echo "[info] Reconfiguring qBittorrent due to ip change..."
 
 					# set listen interface to tunnel local ip using command line
-					#/usr/bin/deluge-console -c /config "config --set listen_interface ${vpn_ip}"
+					/home/nobody/qbittorrent-set-ip.sh ${vpn_ip}
 
 					echo "[info] qBittorrent reconfigured for ip change"
 
@@ -158,7 +157,7 @@ else
 				rm -f /config/qbittorrent-nox.pid
 
 				# set listen interface ip address for deluge using python script
-				#/home/nobody/config_deluge.py "${vpn_ip}"
+				/home/nobody/qbittorrent-set-ip.sh ${vpn_ip}
 
 				# run deluge daemon (daemonized, non-blocking)
 				/usr/bin/qbittorrent-nox -d --profile=/config
@@ -170,12 +169,8 @@ else
 						sleep 0.1
 					done
 
-					# enable bind incoming port to specific port (disable random)
-					#/usr/bin/deluge-console -c /config "config --set random_port False"
-
 					# set incoming port
-					#/usr/bin/deluge-console -c /config "config --set listen_ports (${VPN_INCOMING_PORT},${VPN_INCOMING_PORT})"
-
+					/home/nobody/qbittorrent-set-incoming-port.sh "${INCOMING_PORT}"
 				fi
 
 				echo "[info] qBittorrent started"
