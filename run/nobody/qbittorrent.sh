@@ -5,7 +5,7 @@ if [[ ! -f /config/qBittorrent/config/qBittorrent.conf ]]; then
 
 	echo "[info] qBittorrent config file doesn't exist, copying default..."
 	mkdir -p /config/qBittorrent/config/
-	cp /home/nobody/qbittorrent/qBittorrent.conf /config/qBittorrent/config/
+	cp /home/nobody/qBittorrent.conf /config/qBittorrent/config/
 
 else
 	echo "[info] qBittorrent config file already exists, skipping copy"
