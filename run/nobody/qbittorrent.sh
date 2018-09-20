@@ -39,7 +39,7 @@ else
 	port_change="false"
 
 	# set default values for port and ip
-	qbittorrent_port="8999"
+	qbittorrent_port="${INCOMING_PORT}"
 	qbittorrent_ip="0.0.0.0"
 
 	# while loop to check ip and port
@@ -128,11 +128,9 @@ else
 
 						echo "[info] Reconfiguring qBittorrent due to port change..."
 
-						# enable bind incoming port to specific port (disable random)
-						#/usr/bin/deluge-console -c /config "config --set random_port False"
-
 						# set incoming port
 						#/usr/bin/deluge-console -c /config "config --set listen_ports (${VPN_INCOMING_PORT},${VPN_INCOMING_PORT})"
+						/home/nobody/qbittorrent-set-webui-port.sh "${INCOMING_PORT}"
 
 						echo "[info] Deluge reconfigured for port change"
 
