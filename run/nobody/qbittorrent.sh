@@ -143,7 +143,7 @@ else
 					echo "[info] Reconfiguring qBittorrent due to ip change..."
 
 					# set listen interface to tunnel local ip using command line
-					/home/nobody/qbittorrent-set-ip.sh ${vpn_ip}
+					/home/nobody/qbittorrent-set-ip.sh "${vpn_ip}"
 
 					echo "[info] qBittorrent reconfigured for ip change"
 
@@ -157,7 +157,7 @@ else
 				rm -f /config/qbittorrent-nox.pid
 
 				# set listen interface ip address for qBittorrent using python script
-				/home/nobody/qbittorrent-set-ip.sh ${vpn_ip}
+				/home/nobody/qbittorrent-set-ip.sh "${vpn_ip}"
 
 				# run qBittorrent daemon (daemonized, non-blocking)
 				/usr/bin/qbittorrent-nox -d --profile=/config
