@@ -11,7 +11,7 @@ pacman_packages="gnu-netcat ipcalc unrar"
 
 # install compiled packages using pacman
 if [[ ! -z "${pacman_packages}" ]]; then
-	pacman -S --needed "${pacman_packages}" --noconfirm
+	pacman -S --needed ${pacman_packages} --noconfirm
 fi
 
 # archive packages
