@@ -10,7 +10,7 @@ if ! grep -q -m 1 "Connection\\\PortRangeMin=${1}" "${CONF_FILE}"; then
   if grep -q -m 1 'Connection\\\PortRangeMin' "${CONF_FILE}"; then
     # Get line number of Incoming
     LINE_NUM=$(grep -Fn -m 1 'Connection\PortRangeMin' "${CONF_FILE}" | cut -d: -f 1)
-    sed -i "${LINE_NUM}s@.*@Connection\\\PortRangeMin=${1}\n@" "${CONF_FILE}"
+    sed -i "${LINE_NUM}s@.*@Connection\\\PortRangeMin=${1}@" "${CONF_FILE}"
     echo "[info] Modified existing PortRangeMin in qBittorrent config." | ts '%Y-%m-%d %H:%M:%.S'
   else
     echo "Connection\PortRangeMin=${1}" >> "${CONF_FILE}"
