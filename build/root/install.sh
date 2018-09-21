@@ -296,12 +296,12 @@ else
         export WEBUI_PORT="8080"
 fi
 
-export INCOMMING_PORT=$(echo "${INCOMMING_PORT}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
-if [[ ! -z "${INCOMMING_PORT}" ]]; then
-        echo "[info] INCOMMING_PORT defined as '${INCOMMING_PORT}'" | ts '%Y-%m-%d %H:%M:%.S'
+export INCOMING_PORT=$(echo "${INCOMING_PORT}" | sed -e 's~^[ \t]*~~;s~[ \t]*$~~')
+if [[ ! -z "${INCOMING_PORT}" ]]; then
+        echo "[info] INCOMING_PORT defined as '${INCOMING_PORT}'" | ts '%Y-%m-%d %H:%M:%.S'
 else
-        echo "[warn] INCOMMING_PORT not defined (via -e INCOMMING_PORT), defaulting to '8999'" | ts '%Y-%m-%d %H:%M:%.S'
-        export INCOMMING_PORT="8999"
+        echo "[warn] INCOMING_PORT not defined (via -e INCOMING_PORT), defaulting to '8999'" | ts '%Y-%m-%d %H:%M:%.S'
+        export INCOMING_PORT="8999"
 fi
 
 EOF
