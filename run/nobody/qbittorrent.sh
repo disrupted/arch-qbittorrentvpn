@@ -11,6 +11,10 @@ else
   echo "[info] qBittorrent config file already exists, skipping copy"
 fi
 
+/home/nobody/qbittorrent-set-incoming-port.sh "${INCOMING_PORT}"
+/home/nobody/qbittorrent-set-webui-port.sh "${WEBUI_PORT}"
+
+
 # if pid file exists then remove (generated from previous run)
 rm -f /config/qbittorrent-nox.pid
 
