@@ -31,7 +31,6 @@ docker run -d \
     -e VPN_OPTIONS=<additional openvpn cli options> \
     -e STRICT_PORT_FORWARD=<yes|no> \
     -e ENABLE_PRIVOXY=<yes|no> \
-    -e ENABLE_FLOOD=<yes|no|both> \
     -e ENABLE_AUTODL_IRSSI=<yes|no> \
     -e LAN_NETWORK=<lan ipv4 network>/<cidr notation> \
     -e NAME_SERVERS=<name server ip(s)> \
@@ -40,7 +39,7 @@ docker run -d \
     -e UMASK=<umask for created files> \
     -e PUID=<uid for user> \
     -e PGID=<gid for user> \
-    binhex/arch-qbittorrentvpn
+    disrupted/arch-qbittorrentvpn
 ```
 &nbsp;
 Please replace all user variables in the above command defined by <> with the correct values.
@@ -71,7 +70,6 @@ docker run -d \
     -e VPN_PROV=pia \
     -e STRICT_PORT_FORWARD=yes \
     -e ENABLE_PRIVOXY=yes \
-    -e ENABLE_FLOOD=yes \
     -e ENABLE_AUTODL_IRSSI=yes \
     -e LAN_NETWORK=192.168.1.0/24 \
     -e NAME_SERVERS=8.8.8.8,8.8.4.4 \
@@ -80,7 +78,7 @@ docker run -d \
     -e UMASK=002 \
     -e PUID=0 \
     -e PGID=0 \
-    binhex/arch-qbittorrentvpn
+    disrupted/arch-qbittorrentvpn
 ```
 &nbsp;
 **AirVPN provider**
@@ -117,7 +115,6 @@ docker run -d \
     -e VPN_ENABLED=yes \
     -e VPN_PROV=airvpn \
     -e ENABLE_PRIVOXY=yes \
-    -e ENABLE_FLOOD=yes \
     -e ENABLE_AUTODL_IRSSI=yes \
     -e LAN_NETWORK=192.168.1.0/24 \
     -e NAME_SERVERS=209.222.18.222,37.235.1.174,8.8.8.8,209.222.18.218,37.235.1.177,8.8.4.4 \
@@ -126,7 +123,7 @@ docker run -d \
     -e UMASK=000 \
     -e PUID=0 \
     -e PGID=0 \
-    binhex/arch-qbittorrentvpn
+    disrupted/arch-qbittorrentvpn
 ```
 &nbsp;
 **Notes**
@@ -145,18 +142,4 @@ User ID (PUID) and Group ID (PGID) can be found by issuing the following command
 
 `id <username>`
 
-If you want to create an additional user account for ruTorrent webui then please execute the following on the host:-
-
-`docker exec -it <container name> /home/nobody/createuser.sh <username to create>`
-
-If you want to delete a user account (or change the password for an account) then please execute the following on the host:-
-
-`docker exec -it <container name> /home/nobody/deluser.sh <username to delete>`
-
 If you do not define the PHP timezone you may see issues with the ruTorrent Scheduler plugin, please make sure you set the PHP timezone by specifying this using the environment variable PHP_TZ. Valid timezone values can be found here, http://php.net/manual/en/timezones.php
-___
-If you appreciate my work, then please consider buying me a beer  :D
-
-[![PayPal donation](https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MM5E27UX6AUU4)
-
-[Support forum](http://lime-technology.com/forum/index.php?topic=47832.0)
